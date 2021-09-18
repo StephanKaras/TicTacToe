@@ -32,35 +32,27 @@ public class Main {
 				{'-', '-', '-', '-', '-'},
 				{'7', '|', '8', '|', '9'} };
 		
-		
-		System.out.println("Player 1, pick your position! (1-9)");
 		printBoard(board);
-		int position = Integer.valueOf(scanner.nextLine());
-		choosePosition(p1, board, position);
-		printBoard(board);
+		System.out.println("Player 1 goes first, then Player 2.");
 		
-		System.out.println("Player 2's Turn");
-		position = Integer.valueOf(scanner.nextLine());
-		choosePosition(p2, board, position);
-		printBoard(board);
-		
-		System.out.println("Player 1's Turn");
-		position = Integer.valueOf(scanner.nextLine());
-		choosePosition(p1, board, position);
-		printBoard(board);
-		
-		System.out.println("Player 2's Turn");
-		position = Integer.valueOf(scanner.nextLine());
-		choosePosition(p2, board, position);
-		printBoard(board);
-		chooseWinner(p1, board);
-		
-		System.out.println("Player 1's Turn");
-		position = Integer.valueOf(scanner.nextLine());
-		choosePosition(p1, board, position);
-		printBoard(board);
-		chooseWinner(p1, board);
-		
+		int decider = 0;
+
+		while (!(isThereAWinner(p1, p2))) {
+			if (decider % 2 == 0) {
+				int position = Integer.valueOf(scanner.nextLine());
+				choosePosition(p1, board, position);
+				printBoard(board);
+				chooseWinner(p1, board);
+				decider++;
+			} else {
+				int position = Integer.valueOf(scanner.nextLine());
+				choosePosition(p2, board, position);
+				printBoard(board);
+				chooseWinner(p1, board);
+				decider++;
+			}
+			
+		}
 		
 	}
 	
@@ -98,7 +90,7 @@ public class Main {
 					gameboard[4][2] = player.playerAsChar();
 				}else {
 					gameboard[4][4] = player.playerAsChar();
-				}
+				} 
 				
 				break;
 			} else {
@@ -111,12 +103,7 @@ public class Main {
 	public static void chooseWinner(Player p1, char[][] gameboard) {
 			//horizontal row1
 		if ((gameboard[0][0] == 'X') && (gameboard[0][2] == 'X') && (gameboard[0][4] == 'X')) {
-			if (p1.isX()) {
-				System.out.println("PLAYER 1 WON THE GAME!");
-			} else {
-				System.out.println("PLAYER 2 WON THE GAME!");
-			}
-			
+			p1.whoWon();
 			// horizontal row2
 		} else if ((gameboard[2][0] == 'X') && (gameboard[2][2] == 'X') && (gameboard[2][4] == 'X')) {
 			p1.whoWon();
@@ -135,8 +122,21 @@ public class Main {
 			//diagonal 1
 		} else if ((gameboard[0][0] == 'X') && (gameboard[2][2] == 'X') && (gameboard[4][4] == 'X')) {
 			p1.whoWon();
-		} else {
+			//diagonal 2
+		} else if ((gameboard[0][4] == 'X') && (gameboard[2][2] == 'X') && (gameboard[4][0] == 'X')){
 			p1.whoWon();
+		} else if (gameboard[0][0]  == 'X'&& gameboard[0][2]  == 'X'&& gameboard[0][4]  == 'X'&& gameboard[2][0]  == 'X'&& 
+				gameboard[2][2]  == 'X'&& gameboard[2][4]  == 'X'&& gameboard[4][0]  == 'X'&& gameboard[4][2]  == 'X'&& gameboard[4][4] == 'X'){
+			System.out.println("no one won");
+		}
+		
+	}
+	
+	public static boolean isThereAWinner(Player p1, Player p2) {
+		if (p1.isThereWinner()) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

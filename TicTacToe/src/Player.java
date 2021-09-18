@@ -1,6 +1,7 @@
 
 public class Player {
 		private String type;
+		private String winnerOrNot;
 
 		public Player (String type){
 			this.type = type;
@@ -8,6 +9,7 @@ public class Player {
 
 		public Player (){
 			this.type = "";
+			this.winnerOrNot = "notyet";
 		}
 
 		public void setP2BasedOn(Player player1){
@@ -34,19 +36,27 @@ public class Player {
 			}
 		}
 		
-		public boolean isO() {
-			if (this.type.equals("O")) {
-				return true;
-			}
-			
-			return false;
+		public void isWinner() {
+			this.winnerOrNot = "is Winner";
 		}
 		
 		public String whoWon() {
 			if (this.isX()) {
-					return "PLAYER 1 WON THE GAME!";
+				this.isWinner();
+				System.out.println("PLAYER 1 WON THE GAME!");
+				return "PLAYER 1 WON THE GAME!";
 			} else {
+				this.isWinner();
+				System.out.println("PLAYER 2 WON THE GAME!");
 				return "PLAYER 2 WON THE GAME!";
+			}
+		}
+		
+		public boolean isThereWinner() {
+			if (this.winnerOrNot.equals("is Winner")) {
+				return true;
+			} else {
+				return false;
 			}
 		}
 		
